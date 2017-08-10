@@ -1,15 +1,3 @@
-<?php
-require_once '../core/init.php';
-
-if(Input::exists()){
-    echo Input::get('image');
-//    $user = DB::getInstance()->insert('tbl_rest_registration', array(
-//        'PHOTOS'              =>  Input::get('image')
-//
-//    ));
-}
-echo Input::get('image');
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,7 +83,7 @@ echo Input::get('image');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" id="mynavbar-brand" href="index.html">Maginhawa Restaurant Finder Portal</a>
+                <a class="navbar-brand" id="mynavbar-brand" href="index.php">Maginhawa Restaurant Finder Portal</a>
             </div>
             <ul class="nav navbar-top-links navbar-right">
             
@@ -109,7 +97,7 @@ echo Input::get('image');
                         <li><a href="accountsettings.html"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="..\index.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </li>
@@ -125,7 +113,7 @@ echo Input::get('image');
                         </li>
                         <!-- Home Level -->
                         <li>
-                            <a href="index.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+                            <a href="home.php"><i class="glyphicon glyphicon-home"></i> Home</a>
                         </li>
                         <!-- History Level -->
                         <li>

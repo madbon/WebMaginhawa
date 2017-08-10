@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="responsivetools/jquery-confirm/css/jquery-confirm.less" type="text/css">
     <link rel="stylesheet" href="responsivetools/jquery-confirm/demo/libs/bundled.css" type="text/css">
     <link rel="stylesheet" href="responsivetools/jquery-confirm/demo/demo.css">
+    <script src="responsivetools/bootstrap/vendor/jquery/jquery.min.js"></script>
+
+    
     
     <style>
          input.logininput
@@ -57,10 +60,8 @@
     </style>
 
 </head>
-
 <body id="page-top" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
-
     <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container">
@@ -75,9 +76,11 @@
                         <input type="Password" placeholder="Password" id="password" name="password" class="logininput">
                         <button type="submit"  class="loginbutton">Sign in</button>  
                     </form>
+                    <?php
+                        include("phpObjects/login.php");
+                    ?>
                 </a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -261,7 +264,7 @@
         </div>
     </footer>
     <!-- jQuery -->
-    <script src="responsivetools/bootstrap/vendor/jquery/jquery.min.js"></script>
+    
     <!-- Bootstrap Core JavaScript -->
     <script src="responsivetools/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Plugin JavaScript -->
@@ -271,14 +274,21 @@
     <script src="responsivetools/bootstrap/js/contact_me.js"></script>
     <!-- Theme JavaScript -->
     <script src="responsivetools/bootstrap/js/freelancer.min.js"></script>
-
     <!--JS for Confirm-->
     <script src="responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
     <script src="responsivetools/jquery-confirm/demo/demo.js"></script>
     <script async src="responsivetools/jquery-confirm/js/sync-confirm.js"></script>
 
+    
+
 <script type="text/javascript">
 $(document).ready(function(){
+                        // $("#formlogin").submit(function(){
+
+                         
+              
+                        //    // return false;
+                        // });
 
                         $('#formregister').submit(function(){ 
                             // var self = this;

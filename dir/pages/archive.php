@@ -1,3 +1,4 @@
+<?php include('../phpObjects/connect.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,7 +88,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" id="mynavbar-brand" href="index.html">Maginhawa Restaurant Finder Admin Panel</a>
+                <a class="navbar-brand" id="mynavbar-brand" href="">Maginhawa Restaurant Finder Admin Panel</a>
             </div>
             <ul class="nav navbar-top-links navbar-right">
             
@@ -150,7 +151,31 @@
                             </tr>
                         </thead>
                         <tbody>
-
+                            <?php 
+                                $sql = "SELECT * FROM tbl_rest_registration WHERE IS_ACTIVE=2 ";
+                                $result = $conn->query($sql);
+                                $col = "";
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                        $col .="<tr>";
+                                        $col .="<td>".$row['REST_ID']."</td>";
+                                        $col .="<td>".$row['NAME']."</td>";
+                                        $col .="<td>".$row['OWNER']."</td>";
+                                        $col .="<td>".$row['CONTACT_INFO']."</td>";
+                                        $col .="<td>".$row['BLOG_WEB_URL']."</td>";
+                                        $col .="<td>".$row['COMP_ADDRESS']."</td>";
+                                        $col .="<td>".$row['LAT']."</td>";
+                                        $col .="<td>".$row['LONGI']."</td>";
+                                        $col .="<td>".$row['USERNAME']."</td>";
+                                        $col .="<td><button type='button' class='btn btn-default btn-sm btnallow'><span class='glyphicon glyphicon-ok'></span></button></td>";
+                                        $col .="</tr>"; 
+                                    }
+                                    echo $col;
+                                } else {
+                                    echo "0 results";
+                                }
+                             ?>
                         </tbody>
                     </table>
                 </div>
@@ -202,30 +227,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            $.getJSON("../phpObjects/ARCHIVE.json",function(data){
-                // var search = $("#search").val();
-                // var regex = new RegExp(search, 'i');
-                var output;
-                $.each(data, function(key, val){
-                 
-                  output += "<tr>";
-                  output += "<td id='"+key+"'>"+val.REST_ID+"</td>";
-                  output += "<td id='"+key+"'>"+val.NAME+"</td>";
-                  output += "<td id='"+key+"'>"+val.OWNER+"</td>";
-                  output += "<td id='"+key+"'>"+val.CONTACT_INFO+"</td>";
-                  output += "<td id='"+key+"'>"+val.BLOG_WEB_URL+"</td>";
-                  output += "<td id='"+key+"'>"+val.COMP_ADDRESS+"</td>";
-                  output += "<td id='"+key+"'>"+val.LAT+"</td>";
-                  output += "<td id='"+key+"'>"+val.LONGI+"</td>";
-                  output += "<td id='"+key+"'>"+val.USERNAME+"</td>";
-                  output += "<td><button type='button' class='btn btn-default btn-sm btnallow'><span class='glyphicon glyphicon-ok'></span></button></td>";
-                  output += "</tr>";
-                
-                });
-
-                $("tbody").html(output);
-
-              $('.btnallow').on('click', function () {   
+             $('.btnallow').on('click', function () {   
                     var id = $(this).parents('tr:eq(0)').find('td:eq(0)').text();
                     var self = this;
                     $.confirm({
@@ -274,10 +276,33 @@
                                     
                         });
                 });
-            });
-            
-            
 
+            // $.getJSON("../phpObjects/ARCHIVE.json",function(data){
+            //     // var search = $("#search").val();
+            //     // var regex = new RegExp(search, 'i');
+            //     var output;
+            //     $.each(data, function(key, val){
+                 
+            //       output += "<tr>";
+            //       output += "<td id='"+key+"'>"+val.REST_ID+"</td>";
+            //       output += "<td id='"+key+"'>"+val.NAME+"</td>";
+            //       output += "<td id='"+key+"'>"+val.OWNER+"</td>";
+            //       output += "<td id='"+key+"'>"+val.CONTACT_INFO+"</td>";
+            //       output += "<td id='"+key+"'>"+val.BLOG_WEB_URL+"</td>";
+            //       output += "<td id='"+key+"'>"+val.COMP_ADDRESS+"</td>";
+            //       output += "<td id='"+key+"'>"+val.LAT+"</td>";
+            //       output += "<td id='"+key+"'>"+val.LONGI+"</td>";
+            //       output += "<td id='"+key+"'>"+val.USERNAME+"</td>";
+            //       output += "<td><button type='button' class='btn btn-default btn-sm btnallow'><span class='glyphicon glyphicon-ok'></span></button></td>";
+            //       output += "</tr>";
+                
+            //     });
+
+            //     $("tbody").html(output);
+
+             
+            // });
+            
         });
     </script>
 </body>

@@ -86,7 +86,6 @@
                 <a class="navbar-brand" id="mynavbar-brand" href="index.php">Maginhawa Restaurant Finder Portal</a>
             </div>
             <ul class="nav navbar-top-links navbar-right">
-            
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>

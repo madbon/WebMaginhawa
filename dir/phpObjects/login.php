@@ -14,8 +14,8 @@
       {
           $_SESSION['login_user'] = "1";
           $_SESSION["REST_ID"]  = $row["REST_ID"];
-          $admin = $row['USERNAME'];
-          if ($admin == 'admin')
+          $admin = $row['IS_ROLE'];
+          if ($admin == '1')
           {
              echo "
             <script type='text/javascript'>

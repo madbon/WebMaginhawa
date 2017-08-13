@@ -1,54 +1,34 @@
 <?php
+require '../phpObjects/connect.php';
+$caption = $_POST['caption'];
 
-//require '../classes/Upload.php';
-require '../core/init.php';
-//
-//$fileUpload = new File();
-//
-//if(isset($_FILES['file'])){
-//    $fileUpload->uploadFile($_FILES['file']);
-//}else{
-//    die('File was not submitted');
-//}
+$sql = "INSERT INTO tbl_newsfeed_post (CAPTION) VALUES('$caption')";
+mysqli_query($conn, $sql);
+$last_id = mysqli_insert_id($conn);
 
-
-$user = DB::getInstance()->insert('tbl_newsfeed_post', array(
-    'CAPTION' => Input::get('caption')
-));
-if(!$user->error())
-{
-    $id = $user->getlastid();
-
-}
-
-
-$formdata = DB::getInstance();
-
-echo '<pre>';
 $img = $_FILES['img'];
 
 if(!empty($img))
 {
     $img_desc = reArrayFiles($img); 
-    print_r($img_desc);
+    // print_r($img_desc);
+    $arr = array();
     
     foreach($img_desc as $val)
     {
         $newname = date('YmdHis',time()).mt_rand().'.jpg';
         
         move_uploaded_file($val['tmp_name'],'../img/'.$newname);
-        $stat = $formdata->insert('tbl_images',array('PATH'=>$newname,'POST_ID'=>$id));
-
-
-        if($stat)
-        {
-            echo 'success';
-        }else
-        {
-            echo 'error';
-        }
+        $sql2 = "INSERT INTO tbl_images (POST_ID, PATH) VALUES('$last_id','$newname')";
+        mysqli_query($conn, $sql2);
         
+        $keys = array(
+                'imagename'     => $newname,
+                'imagecaption'  => $caption
+            );
+         array_push($arr, $keys);
     }
+   echo json_encode($arr);
     
     
 }

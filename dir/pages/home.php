@@ -10,6 +10,11 @@
     <meta name="author" content="">
 
     <title>Maginhawa Restaurant Finder Portal</title>
+    <!--  CSS for confirm  -->
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.less" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/libs/bundled.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/demo.css">
     <!-- Bootstrap Core CSS -->
     <link href="../responsivetools/sbadmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -20,12 +25,8 @@
     <link href="../responsivetools/sbadmin/vendor/morrisjs/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="../responsivetools/sbadmin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    
+   
 
 <style>
         img.postedimage
@@ -66,8 +67,34 @@
             background-color: rgb(24,188,156);
             color: white;
         }
-       
-   
+        div.row, #page-wrapper
+        {
+            background-color: transparent;
+        }
+        .loader {
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          width: 50px;
+          height: 50px;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }  
+        #captionimage
+        {
+            margin-left: 15px;
+            margin-top: 10px;
+        }
     </style>
 
 </head>
@@ -156,13 +183,13 @@
                                 <textarea class="form-control" name="caption" id="caption"></textarea>
                             </div>
 <!--                            <button type="button" class="btn btn-outline btn-info btn-sm">Add Image</button>-->
-                            <input type="file" name="img[]" class="form-control" multiple id="images">
+                            <input type="file" name="img[]" class="form-control" multiple id="images" required>
                            <!--  &nbsp;&nbsp;&nbsp;&nbsp; -->
                             <button type="submit" class="btn btn-outline btn-success btn-sm" id="postit">Post It</button>
                         </form>
 
                         <p class="hanep"></p>
-                       
+                        <div class="loader"></div>
                     </div>
                 </div>
                 <hr>
@@ -188,13 +215,9 @@
                                 </ul>
                             </li>
                         </ul>
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                                <img src="../img/table.png" class="postedimage">
-                                <img src="../img/table.png" class="postedimage">
-                                <img src="../img/table.png" class="postedimage">
-                                <img src="../img/table.png" class="postedimage">
-                        </div>
+                            <p id="captionimage"></p>
+                            <div class="panel-body">      
+                            </div>
                     </div>
                 </div>
             </div>
@@ -235,25 +258,71 @@
     <script src="../responsivetools/sbadmin/data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
+    <!--JS for Confirm-->
+    <script src="../responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
+    <script src="../responsivetools/jquery-confirm/demo/demo.js"></script>
+    <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
+
     <script type="text/javascript">
+
         $(document).ready(function(){
-         
+         $(".loader").hide();
 
            $('form').submit(function(){
           
                var formdata = new FormData(this);
-               $.ajax({
-                   
-                   type:'POST',
-                   url:'../pages/form_process.php',
-                   data: formdata,
-                   cache:false,
-                   contentType:false,
-                   processData:false
-                   
-               }).done(function(data){
-                   console.log(data);
-               });
+               
+                $.confirm({
+                            title: '',
+                            content: 'Are you sure you want to post this?',
+                            icon: 'fa fa-question-circle',
+                            animation: 'scale',
+                            closeAnimation: 'scale',
+                            opacity: 0.5,
+                            buttons: {
+                                'confirm': {
+                                    text: 'Proceed',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+                                        $(".loader").show();
+                                         // $("#captionimage").text($("#caption").val());
+                                        var caption = $("#caption").val();
+
+                                          $.ajax({
+                                                   type:'POST',
+                                                   url:'../pages/form_process.php',
+                                                   data: formdata,
+                                                   cache:false,
+                                                   contentType:false,
+                                                   processData:false
+                                                   
+                                               }).done(function(data){
+                                                    $(".loader").hide();
+                                                    var output="";
+                                                   
+                                                    var content = JSON.parse(data);
+
+                                                    
+                                                   $.each(content, function(key, keme){
+                                                       
+                                                        output +='<img src="'+'../img/'+keme.imagename+'" class="postedimage" />';
+                                                        // output +='</div>';
+                                                    });
+
+                                                    $("#captionimage").text(caption);
+                                                    $(".panel-body").html(output);
+
+
+
+                                               });
+                                    }
+                                },
+                                cancel: function () {
+                                    $.alert('you clicked on <strong>cancel</strong>');
+                                },
+                            }
+                                    
+                        });
                return false;
            });
                

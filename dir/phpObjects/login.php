@@ -16,6 +16,7 @@
           $_SESSION['login_user'] = "1";
           $_SESSION["REST_ID"]  = $row["REST_ID"];
           $_SESSION["ROLE"] = $row["IS_ROLE"];
+          $_SESSION["RESTNAME"] = $row["NAME"];
           
           $admin = $row['IS_ROLE'];
           if ($admin == '1')

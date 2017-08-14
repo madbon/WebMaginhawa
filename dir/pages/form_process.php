@@ -18,9 +18,12 @@ if(!empty($img))
     
     foreach($img_desc as $val)
     {
+
+   
+ 
         $newname = date('YmdHis',time()).mt_rand().'.jpg';
         
-        move_uploaded_file($val['tmp_name'],'../img/'.$newname);
+        move_uploaded_file($val['tmp_name'],'img/'.$newname);
         $sql2 = "INSERT INTO tbl_images (POST_ID,REST_ID, PATH) VALUES('$last_id','$sess_restid','$newname')";
         mysqli_query($conn, $sql2);
         

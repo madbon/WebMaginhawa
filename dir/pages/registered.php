@@ -11,6 +11,7 @@
     <meta name="author" content="">
 
     <title>Maginhawa Restaurant Finder admin Panel</title>
+    <link rel="shortcut icon" href="../img/tabicon.ico" />
     <!-- Bootstrap Core CSS -->
     <link href="../responsivetools/sbadmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->

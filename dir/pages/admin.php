@@ -15,6 +15,9 @@ include('../phpObjects/connect.php');
     <meta name="author" content="">
 
     <title>Maginhawa Restaurant Finder admin Panel</title>
+    <!-- Customized CSS for General Interface -->
+    <link href="custom/mystyle.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="../img/tabicon.ico" />
     <!-- Bootstrap Core CSS -->
     <link href="../responsivetools/sbadmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -42,39 +45,7 @@ include('../phpObjects/connect.php');
             margin:5px;
             margin-left:0px;
         }
-        div.mypanel-footer
-        {
-            background-color: white;
-        }
-        div.panel-body
-        {
-
-        }
-        div.row, #page-wrapper
-        {
-             background-color: whitesmoke;
-        }
-        div#wrapper, #side-menu
-        {
-            background-color: white;
-        }
-        nav#mynavbar-top
-        {
-            background-color: rgb(44,62,80);
-        }
-        a#mynavbar-brand
-        {
-            color:white;
-        }
-        div.mymodalheader1
-        {
-            background-color: rgb(24,188,156);
-            color: white;
-        }
-       div.row, #page-wrapper
-       {
-        background-color: transparent;
-       }
+        
 
    
     </style>

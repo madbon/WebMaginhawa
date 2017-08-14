@@ -1,0 +1,33 @@
+div.mypanel-footer
+        {
+            background-color: white;
+        }
+        div.panel-body
+        {
+
+        }
+        div.row, #page-wrapper
+        {
+             background-color: whitesmoke;
+        }
+        div#wrapper, #side-menu
+        {
+            background-color: white;
+        }
+        nav#mynavbar-top
+        {
+           background-color: rgb(24,188,156);
+        }
+        a#mynavbar-brand
+        {
+            color:white;
+        }
+        div.row, #page-wrapper
+        {
+            background-color: transparent;
+        }
+        div.mymodalheader1
+        {
+            background-color: rgb(24,188,156);
+            color: white;
+        }

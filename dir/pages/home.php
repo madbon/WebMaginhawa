@@ -14,6 +14,9 @@ include('../phpObjects/connect.php');
     <meta name="author" content="">
 
     <title>Maginhawa Restaurant Finder Portal</title>
+    <!-- Customized CSS for General Interface -->
+    <link href="custom/mystyle.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="../img/tabicon.ico" />
     <!--  CSS for confirm  -->
     <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.css" type="text/css">
     <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.less" type="text/css">
@@ -33,6 +36,7 @@ include('../phpObjects/connect.php');
    
 
 <style>
+
         img.postedimage
         {
             height: 200px;
@@ -42,39 +46,13 @@ include('../phpObjects/connect.php');
             margin:5px;
             margin-left:0px;
         }
-        div.mypanel-footer
-        {
-            background-color: white;
-        }
-        div.panel-body
-        {
-
-        }
-        div.row, #page-wrapper
-        {
-             background-color: whitesmoke;
-        }
-        div#wrapper, #side-menu
-        {
-            background-color: white;
-        }
-        nav#mynavbar-top
-        {
-            background-color: rgb(44,62,80);
-        }
-        a#mynavbar-brand
-        {
-            color:white;
-        }
+        
         div.mymodalheader1
         {
             background-color: rgb(24,188,156);
             color: white;
         }
-        div.row, #page-wrapper
-        {
-            background-color: transparent;
-        }
+        
         .loader {
           border: 16px solid #f3f3f3;
           border-radius: 50%;
@@ -142,7 +120,7 @@ include('../phpObjects/connect.php');
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
                                 <img src="../img/cautionhot.jpg" height="200" width="200">
-                                <h3>CAUTION HOT</h3>
+                                <h3><?php echo $_SESSION["RESTNAME"] ?></h3>
                             </div>
                         </li>
                         <!-- Home Level -->
@@ -246,7 +224,7 @@ include('../phpObjects/connect.php');
                                                     $result2 = $conn->query($sql2);
                                                     if ($result2->num_rows > 0) {
                                                         while($row2 = $result2->fetch_assoc()) {
-                                                            echo '<img src="'.'../img/'.$row2['PATH'].'" class="postedimage" />'; 
+                                                            echo '<img src="'.'img/'.$row2['PATH'].'" class="postedimage" />'; 
                                                         }
                                                     } 
                                                     echo '</div></div>';
@@ -336,7 +314,7 @@ include('../phpObjects/connect.php');
                                                     var output="";
                                                     var content = JSON.parse(data);
                                                     $.each(content, function(key, keme){
-                                                        output += '<img src="'+'../img/'+keme.imagename+'" class="postedimage" />';
+                                                        output += '<img src="'+'img/'+keme.imagename+'" class="postedimage" />';
                                                     });
 
                                                     $(".outputhere").prepend('<div class="panel panel-default">'+

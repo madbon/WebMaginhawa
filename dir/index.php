@@ -68,6 +68,11 @@ else
             background-color: rgb(24,188,156);
            
         }
+        h3.glyphicon-asterisk
+        {
+            color: red;
+        }
+
     </style>
 
 </head>
@@ -147,6 +152,7 @@ else
                         <!-- Restaurant name -->
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <h3 class="glyphicon-asterisk"></h3>
                                 <label for="restoname">Resturant Name</label>
                                 <input type="text" class="form-control" placeholder="Resturant Name" name="restaurantname" id="name" required data-validation-required-message="Please enter your restaurant name.">
                                 <p class="help-block text-danger"></p>
@@ -155,6 +161,7 @@ else
                         <!-- Owner Name -->
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <h3 class="glyphicon-asterisk"></h3>
                                 <label for="ownername">Owner Name</label>
                                 <input type="text" class="form-control" placeholder="Owner Name" name="ownername" id="ownername" required data-validation-required-message="Please enter your owner name.">
                                 <p class="help-block text-danger"></p>
@@ -187,6 +194,7 @@ else
                          <!-- Capacity -->
                          <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <h3 class="glyphicon-asterisk"></h3>
                                 <label for="capacityofchairs">How many chairs are available in the restaurant?</label>
                                 <input type="number" class="form-control" placeholder="How many chairs are available in the restaurant?" name="capacityofchairs" id="capacityofchairs" required data-validation-required-message="Please don't leave this blank">
                                 <p class="help-block text-danger"></p>
@@ -204,6 +212,7 @@ else
                     <!-- Complete Addres -->
                          <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <h3 class="glyphicon-asterisk"></h3>
                                 <label for="completeaddress">Complete Address</label>
                                 <textarea rows="2" class="form-control" placeholder="Complete Address" name="completeaddress" id="completeaddress" required data-validation-required-message="Please enter the complete address of yout restaurant."></textarea>
                                 <p class="help-block text-danger"></p>
@@ -228,6 +237,7 @@ else
                         <!-- Username -->
                          <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <h3 class="glyphicon-asterisk"></h3>
                                 <label for="username">Username</label>
                                 <input type="text" class="form-control" placeholder="Username" name="username" id="regusername" required data-validation-required-message="Please enter your username.">
                                 <p class="help-block text-danger"></p>
@@ -236,6 +246,7 @@ else
                         <!-- Password -->
                          <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <h3 class="glyphicon-asterisk"></h3>
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" placeholder="Password" name="password" id="regpassword" required data-validation-required-message="Please enter your password">
                                 <p class="help-block text-danger"></p>
@@ -244,6 +255,7 @@ else
                         <!-- Confirm Password -->
                          <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <h3 class="glyphicon-asterisk"></h3>
                                 <label for="confirmpassword">Confirm Password</label>
                                 <input type="password" class="form-control" placeholder="Confirm Password" name="confirmpassword" id="confirmpassword" required data-validation-required-message="Please re-enter your password">
                                 <p class="help-block text-danger"></p>

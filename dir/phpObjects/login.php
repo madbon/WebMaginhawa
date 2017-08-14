@@ -1,4 +1,5 @@
 <?php 
+  // session_start();
   include("connect.php"); 
            
    if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,6 +15,8 @@
       {
           $_SESSION['login_user'] = "1";
           $_SESSION["REST_ID"]  = $row["REST_ID"];
+          $_SESSION["ROLE"] = $row["IS_ROLE"];
+          
           $admin = $row['IS_ROLE'];
           if ($admin == '1')
           {

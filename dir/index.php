@@ -1,4 +1,15 @@
+<?php 
+session_start(); 
+error_reporting(E_ALL ^ E_NOTICE);
+$loginsess = $_SESSION['login_user'];
+if ($loginsess == 1){
+     header("location: pages/home.php");
+}
+else
+{
 
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -283,15 +294,8 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-                        // $("#formlogin").submit(function(){
-
-                         
-              
-                        //    // return false;
-                        // });
 
                         $('#formregister').submit(function(){ 
-                            // var self = this;
                             var name                = $("#name").val();
                             var ownername           = $("#ownername").val();
                             var contactnumber       = $("#contactnumber").val();
@@ -349,12 +353,7 @@ $(document).ready(function(){
                                     
                         });
                     return false;
-                });
-                        
-    // alert
-             
-    
-   
+                });   
 });
 </script>
    

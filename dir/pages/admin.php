@@ -1,6 +1,8 @@
 <?php
+include('Session/session_admin.php');
 include('../phpObjects/connect.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,7 +106,7 @@ include('../phpObjects/connect.php');
                         <li><a href="accountsettings.html"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="..\index.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </li>

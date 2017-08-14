@@ -1,8 +1,10 @@
 <?php
+include('Session/session_user.php');
 require '../phpObjects/connect.php';
-$caption = $_POST['caption'];
 
-$sql = "INSERT INTO tbl_newsfeed_post (CAPTION) VALUES('$caption')";
+$caption = $_POST['caption'];
+$sess_restid = $_SESSION["REST_ID"];
+$sql = "INSERT INTO tbl_newsfeed_post (REST_ID,CAPTION) VALUES('$sess_restid','$caption')";
 mysqli_query($conn, $sql);
 $last_id = mysqli_insert_id($conn);
 
@@ -19,7 +21,7 @@ if(!empty($img))
         $newname = date('YmdHis',time()).mt_rand().'.jpg';
         
         move_uploaded_file($val['tmp_name'],'../img/'.$newname);
-        $sql2 = "INSERT INTO tbl_images (POST_ID, PATH) VALUES('$last_id','$newname')";
+        $sql2 = "INSERT INTO tbl_images (POST_ID,REST_ID, PATH) VALUES('$last_id','$sess_restid','$newname')";
         mysqli_query($conn, $sql2);
         
         $keys = array(

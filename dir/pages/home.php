@@ -1,3 +1,7 @@
+<?php 
+include('Session/session_user.php');
+include('../phpObjects/connect.php');
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -90,10 +94,14 @@
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }  
-        #captionimage
+        .captionimage
         {
             margin-left: 15px;
             margin-top: 10px;
+        }
+        div.loader
+        {
+            display: none;
         }
     </style>
 
@@ -123,7 +131,7 @@
                         <li><a href="accountsettings.html"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="..\index.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </li>
@@ -185,6 +193,7 @@
 <!--                            <button type="button" class="btn btn-outline btn-info btn-sm">Add Image</button>-->
                             <input type="file" name="img[]" class="form-control" multiple id="images" required>
                            <!--  &nbsp;&nbsp;&nbsp;&nbsp; -->
+                           <br/>
                             <button type="submit" class="btn btn-outline btn-success btn-sm" id="postit">Post It</button>
                         </form>
 
@@ -195,30 +204,56 @@
                 <hr>
             <div class="row">
                 <div class="col-lg-8">
-                    <!-- Whole body of post -->
-                    <div id="postbody">
-                    </div>
                     
-                     <!-- Whole body of post -->
-                    <div class="panel panel-default">
-                        <!-- Dropdown button for edit and delete post -->
-                         <ul class="nav navbar-top-links navbar-right">
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                   <i class="fa fa-caret-down"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li  data-toggle="modal" data-target="#myModal"><a href="#"><i class="glyphicon glyphicon-pencil"></i>  Edit Post</a>
-                                    </li>
-                                    <li><a href="#"><i class="glyphicon glyphicon-trash"></i> Delete Post</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                            <p id="captionimage"></p>
-                            <div class="panel-body">      
-                            </div>
-                    </div>
+                            <div class="outputhere">  
+                                
+                            </div><!-- /outputhere -->
+                    
+
+                                          <?php 
+                                          
+                                            $sess_restid = $_SESSION["REST_ID"];
+                                            $sql = "SELECT * FROM tbl_newsfeed_post WHERE REST_ID = '$sess_restid' ORDER BY POST_ID DESC ";
+                                            $result = $conn->query($sql);
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                while($row = $result->fetch_assoc()) {
+                                                   echo '<div class="panel panel-default">
+                                                            <ul class="nav navbar-top-links navbar-right">
+                                                                <li class="dropdown">
+                                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                                        <i class="fa fa-caret-down"></i>
+                                                                    </a>
+                                                                <ul class="dropdown-menu dropdown-user">
+                                                                    <li  data-toggle="modal" data-target="#myModal">
+                                                                        <a href="#">
+                                                                            <i class="glyphicon glyphicon-pencil"></i>  Edit Post
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <i class="glyphicon glyphicon-trash"></i> Delete Post
+                                                                        </a>
+                                                                    </li>
+                                                                    </ul>                                                                
+                                                                </li> 
+                                                            </ul>';
+                                                    echo '<p class="captionimage">'.$row['CAPTION'].'</p>';
+                                                    echo '<div class="panel-body">'; 
+
+                                                    $rowpostid = $row['POST_ID'];
+                                                    $sql2 = "SELECT * FROM tbl_images WHERE POST_ID ='$rowpostid' ";
+                                                    $result2 = $conn->query($sql2);
+                                                    if ($result2->num_rows > 0) {
+                                                        while($row2 = $result2->fetch_assoc()) {
+                                                            echo '<img src="'.'../img/'.$row2['PATH'].'" class="postedimage" />'; 
+                                                        }
+                                                    } 
+                                                    echo '</div></div>';
+                                                }
+                                            } 
+                                         ?>    
+                    
                 </div>
             </div>
         </div>
@@ -299,18 +334,28 @@
                                                }).done(function(data){
                                                     $(".loader").hide();
                                                     var output="";
-                                                   
                                                     var content = JSON.parse(data);
-
-                                                    
-                                                   $.each(content, function(key, keme){
-                                                       
-                                                        output +='<img src="'+'../img/'+keme.imagename+'" class="postedimage" />';
-                                                        // output +='</div>';
+                                                    $.each(content, function(key, keme){
+                                                        output += '<img src="'+'../img/'+keme.imagename+'" class="postedimage" />';
                                                     });
 
-                                                    $("#captionimage").text(caption);
-                                                    $(".panel-body").html(output);
+                                                    $(".outputhere").prepend('<div class="panel panel-default">'+
+                                                                '<ul class="nav navbar-top-links navbar-right">'+
+                                                                '<li class="dropdown">'+
+                                                                '<a class="dropdown-toggle" data-toggle="dropdown" href="#">'+
+                                                                '<i class="fa fa-caret-down"></i>'+
+                                                                '</a>'+
+                                                                '<ul class="dropdown-menu dropdown-user">'+
+                                                                '<li  data-toggle="modal" data-target="#myModal"><a href="#"><i class="glyphicon glyphicon-pencil"></i>  Edit Post</a>'+
+                                                                '</li>'+
+                                                                '<li><a href="#"><i class="glyphicon glyphicon-trash"></i> Delete Post</a>'+
+                                                                '</li>'+
+                                                                '</ul>'+                                                                 
+                                                                '</li>'+  
+                                                                '</ul>'+
+                                                                '<p class="captionimage">'+caption+'</p>'+
+                                                                '<div class="panel-body">'+output+'</div></div>'  
+                                                    );
 
 
 

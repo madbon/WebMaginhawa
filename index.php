@@ -302,11 +302,29 @@ else
     <script src="responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
     <script src="responsivetools/jquery-confirm/demo/demo.js"></script>
     <script async src="responsivetools/jquery-confirm/js/sync-confirm.js"></script>
+    <!-- Google Api Latitude and Longitude -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBx5PRy8IQOrVKRJCtQDnc9BwOSGpdfwk&sensor=false"></script>
 
     
 
 <script type="text/javascript">
 $(document).ready(function(){
+                        $("#latitude").click(function(){
+
+                            var address = $("#completeaddress").val();
+                            var geocoder =  new google.maps.Geocoder();
+                                geocoder.geocode( { 'address': address}, function(results, status) {
+                                      if (status == google.maps.GeocoderStatus.OK) {
+                                        // alert("location : " + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng()); 
+                                            $("#latitude").val(results[0].geometry.location.lat());
+                                            $("#longitude").val(results[0].geometry.location.lng());
+
+
+                                      } else {
+                                            $.alert("Something got wrong " + status);
+                                      }
+                                });
+                        });
 
                         $('#formregister').submit(function(){ 
                             var name                = $("#name").val();

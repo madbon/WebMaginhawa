@@ -281,6 +281,8 @@ include('../phpObjects/connect.php');
         $(document).ready(function(){
          $(".loader").hide();
 
+            
+
            $('form').submit(function(){
           
                var formdata = new FormData(this);

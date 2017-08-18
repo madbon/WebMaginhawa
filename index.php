@@ -338,51 +338,59 @@ $(document).ready(function(){
                             var longitude           = $("#longitude").val();
                             var username            = $("#regusername").val();
                             var password            = $("#regpassword").val();
+                            var confirmpassword     = $("#confirmpassword").val(); 
+                            if (password == confirmpassword)
+                            {
+                                         $.confirm({
+                                            title: '',
+                                            content: 'Are you sure you want to submit it?',
+                                            icon: 'fa fa-question-circle',
+                                            animation: 'scale',
+                                            closeAnimation: 'scale',
+                                            opacity: 0.5,
+                                            buttons: {
+                                                'confirm': {
+                                                    text: 'Proceed',
+                                                    btnClass: 'btn-blue',
+                                                    action: function () {
+                                                         $.ajax({
 
-                            $.confirm({
-                            title: '',
-                            content: 'Are you sure you want to submit it?',
-                            icon: 'fa fa-question-circle',
-                            animation: 'scale',
-                            closeAnimation: 'scale',
-                            opacity: 0.5,
-                            buttons: {
-                                'confirm': {
-                                    text: 'Proceed',
-                                    btnClass: 'btn-blue',
-                                    action: function () {
-                                         $.ajax({
+                                                                           type:'POST',
+                                                                           url:'phpObjects/toRegisterResto.php',
+                                                                           data: {
+                                                                                name:name,
+                                                                                ownername:ownername,
+                                                                                contactnumber:contactnumber,
+                                                                                blogweburl:blogweburl,
+                                                                                history:history,
+                                                                                capacityofchairs:capacityofchairs,
+                                                                                completeaddress:completeaddress,
+                                                                                latitude:latitude,
+                                                                                longitude:longitude,
+                                                                                username:username,
+                                                                                password:password
+                                                                           }
 
-                                                           type:'POST',
-                                                           url:'phpObjects/toRegisterResto.php',
-                                                           data: {
-                                                                name:name,
-                                                                ownername:ownername,
-                                                                contactnumber:contactnumber,
-                                                                blogweburl:blogweburl,
-                                                                history:history,
-                                                                capacityofchairs:capacityofchairs,
-                                                                completeaddress:completeaddress,
-                                                                latitude:latitude,
-                                                                longitude:longitude,
-                                                                username:username,
-                                                                password:password
-                                                           }
-
-                                                       }).done(function(data){
-                                                            $.alert('Successfully Saved');
-                                                            
-                                             
-                                                       });
-                                        
-                                    }
-                                },
-                                cancel: function () {
-                                    $.alert('you clicked on <strong>cancel</strong>');
-                                },
+                                                                       }).done(function(data){
+                                                                            $.alert('Successfully Saved');
+                                                                            
+                                                             
+                                                                       });
+                                                        
+                                                    }
+                                                },
+                                                cancel: function () {
+                                                    $.alert('you clicked on <strong>cancel</strong>');
+                                                },
+                                            }
+                                            
+                                });
                             }
-                                    
-                        });
+                            else
+                            {
+                                $.alert('Password does not match!');
+                            }
+                           
                     return false;
                 });   
 });

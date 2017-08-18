@@ -53,7 +53,7 @@ include('../phpObjects/connect.php');
             color: white;
         }
         
-        .loader {
+        .loader, .editloader {
           border: 16px solid #f3f3f3;
           border-radius: 50%;
           border-top: 16px solid #3498db;
@@ -77,10 +77,34 @@ include('../phpObjects/connect.php');
             margin-left: 15px;
             margin-top: 10px;
         }
-        div.loader
+        div.loader, div.editloader
         {
             display: none;
         }
+
+        /*------- Custom*/
+        div.hover-profile-pic
+        {
+            /*background-color: rgba(255,255,255,0.5);*/
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            bottom: 56px;
+            display: none;
+        }
+        .hoverbutton
+        {
+            
+            margin-left: 50px;
+            width: 100px;
+            margin-top: 100px;
+
+        }
+        p.imgid, p#imgpostid
+        {
+            display: none;
+        }
+
     </style>
 
 </head>
@@ -104,8 +128,6 @@ include('../phpObjects/connect.php');
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
                         <li><a href="accountsettings.html"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
                         </li>
                         <li class="divider"></li>
@@ -119,7 +141,10 @@ include('../phpObjects/connect.php');
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
-                                <img src="../img/cautionhot.jpg" height="200" width="200">
+                                <img src="../img/cautionhot.jpg" height="200" width="200" class="profilepic">
+                                <div class="hover-profile-pic">
+                                    <div class="btn btn-sm btn-info hoverbutton">Change Profile</div>
+                                </div>
                                 <h3><?php echo $_SESSION["RESTNAME"] ?></h3>
                             </div>
                         </li>
@@ -164,7 +189,7 @@ include('../phpObjects/connect.php');
             </div>
             <div class="row">
                     <div class="col-lg-8">
-                        <form action="../pages/form_process.php" method="post" multipart="" enctype="multipart/form-data">
+                        <form action="../pages/form_process.php" method="post" multipart="" id="insertpostform" enctype="multipart/form-data">
                             <div class="form-group">
                                 <textarea class="form-control" name="caption" id="caption"></textarea>
                             </div>
@@ -186,45 +211,47 @@ include('../phpObjects/connect.php');
                             <div class="outputhere">  
                                 
                             </div><!-- /outputhere -->
-                    
-
-                                          <?php 
+                                        <?php 
                                           
                                             $sess_restid = $_SESSION["REST_ID"];
-                                            $sql = "SELECT * FROM tbl_newsfeed_post WHERE REST_ID = '$sess_restid' ORDER BY POST_ID DESC ";
+                                            $sql = "SELECT * FROM tbl_newsfeed_post WHERE REST_ID = '$sess_restid' AND IS_ACTIVE=1 ORDER BY POST_ID DESC ";
                                             $result = $conn->query($sql);
                                             if ($result->num_rows > 0) {
                                                 // output data of each row
                                                 while($row = $result->fetch_assoc()) {
-                                                   echo '<div class="panel panel-default">
+                                                    echo '<div class="panel-body">'; 
+                                                    echo '<p class="imgid">'.$row['POST_ID'].'</p>';
+                                                    echo '<div class="panel panel-default">
                                                             <ul class="nav navbar-top-links navbar-right">
                                                                 <li class="dropdown">
                                                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                                                         <i class="fa fa-caret-down"></i>
                                                                     </a>
-                                                                <ul class="dropdown-menu dropdown-user">
-                                                                    <li  data-toggle="modal" data-target="#myModal">
-                                                                        <a href="#">
-                                                                            <i class="glyphicon glyphicon-pencil"></i>  Edit Post
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <i class="glyphicon glyphicon-trash"></i> Delete Post
-                                                                        </a>
-                                                                    </li>
+                                                                    <ul class="dropdown-menu dropdown-user">
+
+                                                                        <li  data-toggle="modal" data-target="#myModal" class="liEditCaption">
+                                                                            <a href="#">Edit Caption</a>
+                                                                        </li>
+                                                                        <li  data-toggle="modal" data-target="#myModal" class="liChangeImage">
+                                                                            <a href="#">Change Image</a>
+                                                                        </li>
+                                                                        <li class="liDeletePost">
+                                                                            <a href="#"> Delete Post </a>
+                                                                        </li>
                                                                     </ul>                                                                
                                                                 </li> 
                                                             </ul>';
+                                                   
+                                                    
                                                     echo '<p class="captionimage">'.$row['CAPTION'].'</p>';
-                                                    echo '<div class="panel-body">'; 
 
                                                     $rowpostid = $row['POST_ID'];
-                                                    $sql2 = "SELECT * FROM tbl_images WHERE POST_ID ='$rowpostid' ";
+                                                    $sql2 = "SELECT * FROM tbl_images WHERE POST_ID ='$rowpostid' AND IS_ACTIVE=1 ";
                                                     $result2 = $conn->query($sql2);
                                                     if ($result2->num_rows > 0) {
                                                         while($row2 = $result2->fetch_assoc()) {
-                                                            echo '<img src="'.'img/'.$row2['PATH'].'" class="postedimage" />'; 
+                                                            echo '<img src="'.'img/'.$row2['PATH'].'" class="postedimage" />';
+                                                            echo '<p id="imgpostid">img_id_postid: '.$row2['POST_ID'].'</p>'; 
                                                         }
                                                     } 
                                                     echo '</div></div>';
@@ -240,6 +267,7 @@ include('../phpObjects/connect.php');
     <!-- Modal -->
     <div class="container">
       <div class="modal fade" id="myModal" role="dialog">
+
         <div class="modal-dialog">
           <!-- Modal content-->
           <div class="modal-content">
@@ -247,14 +275,25 @@ include('../phpObjects/connect.php');
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Edit Post</h4>
             </div>
-            <div class="modal-body">
-              <textarea class="form-control"></textarea>
-              <br/>
-              <button type="button" class="btn btn-outline btn-info btn-sm">Change Photo</button>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline btn-success" data-dismiss="modal">Save</button>
-            </div>
+           
+             <form action="formprocess/form_process_editpost.php" method="post" multipart="" id="editpostform" enctype="multipart/form-data">
+                <input type="text" id="editNumber">
+                <input type="text" id="captionIdNumber" name="captionIdNumber">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea class="form-control" name="editcaption" id="editcaption"></textarea>
+                    </div>
+            
+                        <br/>                        
+                        <input type="file" name="editimg[]" class="form-control" multiple id="editimages">
+                    <br/>
+                    <div class="editloader"></div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-outline btn-success btn-sm" id="editpostit">Update</button>
+                </div>
+            </form>
           </div>
         </div>
       </div>
@@ -267,23 +306,195 @@ include('../phpObjects/connect.php');
     <script src="../responsivetools/sbadmin/vendor/metisMenu/metisMenu.min.js"></script>
     <!-- Morris Charts JavaScript -->
     <script src="../responsivetools/sbadmin/vendor/raphael/raphael.min.js"></script>
-    <script src="../responsivetools/sbadmin/vendor/morrisjs/morris.min.js"></script>
-    <script src="../responsivetools/sbadmin/data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
     <!--JS for Confirm-->
     <script src="../responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
-    <script src="../responsivetools/jquery-confirm/demo/demo.js"></script>
     <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
 
     <script type="text/javascript">
 
         $(document).ready(function(){
-         $(".loader").hide();
+            var deletepostid;
+            $(".loader").hide();
 
-            
+            $(".hoverbutton").click(function(){
+                window.location.href = "userprofile.html";
+            });
 
-           $('form').submit(function(){
+            $(".profilepic").mouseover(function(){
+                $(".hover-profile-pic").show();
+
+            });
+            $(".hover-profile-pic").mouseout(function(){
+                $(".hover-profile-pic").hide();
+
+            });
+            $(".hoverbutton").mouseout(function(){
+                $(".hover-profile-pic").show();
+                $(this).show();
+            });
+             $(".hoverbutton").mouseover(function(){
+                $(".hover-profile-pic").show();
+            });
+
+            $("changephoto").click(function(){
+                $("#editimages").show();
+                $("#inputhide").val("1");
+            });
+
+            /*-------- response to Click the Edit Caption*/
+            $('.liEditCaption').on('click', function(e) {
+                $("#editNumber").val("0");
+                $("#editimages").hide();
+                $("#editcaption").removeAttr("disabled");
+            });
+            /*-------- response to Click the Change Image*/
+             $('.liChangeImage').on('click', function(e) {
+                $("#editNumber").val("1");
+                $("#editimages").show();
+                $("#editcaption").attr("disabled", "disabled");
+
+            });
+            /*-------- response to delete Post*/
+             $('.liDeletePost').on('click', function(e) {
+                    
+                        $.confirm({
+                            title: '',
+                            content: 'Are you sure you want to delete this post?',
+                            icon: 'fa fa-question-circle',
+                            animation: 'scale',
+                            closeAnimation: 'scale',
+                            opacity: 0.5,
+                            buttons: {
+                                'confirm': {
+                                    text: 'Proceed',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+                                        $.ajax({
+                                                type:'POST',
+                                                url:'../phpObjects/toDeletePost.php',
+                                                data: {
+                                                    deletepostid:deletepostid
+                                                }
+                                                }).done(function(data){
+                                                    $.alert('Successfully deleted');
+                                                    location.reload();
+                                               });
+                                    }
+                                },
+                                cancel: function () {
+                                    $.alert('you clicked on <strong>cancel</strong>');
+                                },
+                            }       
+                        });
+
+            });
+          
+            // ------- when panel-body of post is click, the p.captionimage value will fill the textarea #editcaption inside the modal of edit post
+            $('.panel-body').on('click', function(e) {
+                var captionimage = $(this).find("p.captionimage").text();
+                var captionid    = $(this).find("p.imgid").text();
+                 deletepostid = $(this).find("p.imgid").text();
+                $("#editcaption").val(captionimage);    
+                $("#captionIdNumber").val($.trim(captionid));
+
+            });
+
+            // -------- Update caption and image function
+
+            $("#editpostform").submit(function(){
+                var editcaption         = $("#editcaption").val();
+                var captionIdNumbertrim = $.trim($("#captionIdNumber").val());
+                var editNumber          = $("#editNumber").val();
+
+                if(editNumber == "0")
+                {
+                    $.confirm({
+                            title: '',
+                            content: 'Are you sure you want to change the caption?',
+                            icon: 'fa fa-question-circle',
+                            animation: 'scale',
+                            closeAnimation: 'scale',
+                            opacity: 0.5,
+                            buttons: {
+                                'confirm': {
+                                    text: 'Proceed',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+                                        $.ajax({
+                                                    type:'POST',
+                                                    url:'../phpObjects/toUpdateCaption.php',
+                                                    data: {
+                                                    editcaption:editcaption,
+                                                    captionIdNumbertrim:captionIdNumbertrim
+                                                    }
+                                                    }).done(function(data){
+                                                        $.alert('Successfully Saved');
+                                                        $(".editloader").hide();
+                                                         location.reload();
+                                                });
+                                    }
+                                },
+                                cancel: function () {
+                                    $.alert('you clicked on <strong>cancel</strong>');
+                                },
+                            }       
+                        });
+                }
+                else if(editNumber == "1")
+                {
+                    var formdata = new FormData(this);
+                    $.confirm({
+                            title: '',
+                            content: 'Are you sure you want to update posted image?',
+                            icon: 'fa fa-question-circle',
+                            animation: 'scale',
+                            closeAnimation: 'scale',
+                            opacity: 0.5,
+                            buttons: {
+                                'confirm': {
+                                    text: 'Proceed',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+                                        $(".editloader").show();
+
+                                         $.ajax({
+                                                    type:'POST',
+                                                    url:'../phpObjects/toUpdateImageIsActiveToZero.php',
+                                                    data: {
+                                                    captionIdNumbertrim:captionIdNumbertrim
+                                                    }
+                                                    }).done(function(data){
+                                                        $.ajax({
+                                                               type:'POST',
+                                                               url:'form_process_editpost.php',
+                                                               data: formdata,
+                                                               cache:false,
+                                                               contentType:false,
+                                                               processData:false
+                                                               
+                                                           }).done(function(data){
+                                                                $(".editloader").hide();
+                                                                location.reload();
+                                                        });
+                                                });
+                                    }
+                                },
+                                cancel: function () {
+                                    $.alert('you clicked on <strong>cancel</strong>');
+                                },
+                            }
+                                    
+                        });
+                }
+                
+
+                
+               return false;
+            });
+
+            $('#insertpostform').submit(function(){
           
                var formdata = new FormData(this);
                
@@ -326,9 +537,11 @@ include('../phpObjects/connect.php');
                                                                 '<i class="fa fa-caret-down"></i>'+
                                                                 '</a>'+
                                                                 '<ul class="dropdown-menu dropdown-user">'+
-                                                                '<li  data-toggle="modal" data-target="#myModal"><a href="#"><i class="glyphicon glyphicon-pencil"></i>  Edit Post</a>'+
+                                                                '<li  data-toggle="modal" data-target="#myModal" class="liEditCaption"><a href="#">Edit Caption</a>'+
                                                                 '</li>'+
-                                                                '<li><a href="#"><i class="glyphicon glyphicon-trash"></i> Delete Post</a>'+
+                                                                '<li  data-toggle="modal" data-target="#myModal" class="liChangeImage"><a href="#">Change Image</a>'+
+                                                                '</li>'+
+                                                                '<li class="liDeletePost"><a href="#">Delete Post</a>'+
                                                                 '</li>'+
                                                                 '</ul>'+                                                                 
                                                                 '</li>'+  

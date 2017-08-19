@@ -59,6 +59,10 @@ include('../phpObjects/connect.php');
     {
         border:0;
     }
+    td.bestseller
+    {
+        display: none;
+    }
    
     </style>
 
@@ -111,6 +115,8 @@ include('../phpObjects/connect.php');
                                  <div class="hover-profile-pic">
                                     <div class="btn btn-sm btn-info hoverbutton">Change Profile</div>
                                 </div>
+                                <p id="sess_restid"><?php echo $_SESSION["REST_ID"];?></p>
+
                             </div>
                         </li>
                         <!-- Home Level -->
@@ -154,10 +160,12 @@ include('../phpObjects/connect.php');
             </div>
             <div class="row">
                     <div class="col-lg-8">
-                        <div class="form-group">
-                            <textarea class="form-control"></textarea>
-                        </div>
-                        <button type="button" class="btn btn-outline btn-success btn-sm">Save</button>
+                        <form method="post" action="" id="formaddfood">
+                            <div class="form-group">
+                                <textarea class="form-control" id="txtfoodadd" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-outline btn-success btn-sm">Save</button>
+                        </form>
                     </div>
                 </div>
                 <hr>
@@ -189,42 +197,30 @@ include('../phpObjects/connect.php');
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Adobo</td>
-                                            <td>
-                                                <button type="button" class="btn btn-outline btn-warning btn-sm"><i class="glyphicon glyphicon-heart-empty"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline btn-info btn-sm"><i class="glyphicon glyphicon-pencil"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Caldereta</td>
-                                             <td>
-                                              <button type="button" class="btn btn-outline btn-warning btn-sm"><i class="glyphicon glyphicon-heart-empty"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline btn-info btn-sm"><i class="glyphicon glyphicon-pencil"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Kare-Kare</td>
-                                             <td>
-                                                <button type="button" class="btn btn-outline btn-warning btn-sm"><i class="glyphicon glyphicon-heart-empty"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline btn-info btn-sm"><i class="glyphicon glyphicon-pencil"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                       <?php
+                                            $sess_restid = $_SESSION["REST_ID"];
+                                            $sql2 = "SELECT * FROM tbl_food WHERE REST_ID ='$sess_restid' AND IS_ACTIVE=1 ";
+                                            $result2 = $conn->query($sql2);
+                                            if ($result2->num_rows > 0) {
+                                                while($row2 = $result2->fetch_assoc()) {
+                                                    echo '<tr class="delicacy">';
+                                                    echo '<td>'.$row2['FOOD_ID'].'</td>';
+                                                    echo '<td>'.$row2['FOOD_NAME'].'</td>';
+                                                    echo '<td class="bestseller">'.$row2['IS_BEST'].'</td>';
+                                                    echo '<td><button type="button" class="btn btn-outline btn-warning btn-sm btnBestSeller">
+                                                            <i class="glyphicon glyphicon-heart-empty"></i>
+                                                          </button></td>';
+                                                    echo '<td><button type="button" class="btn btn-outline btn-info btn-sm btnEdit">
+                                                            <i class="glyphicon glyphicon-pencil"></i>
+                                                          </button></td>';  
+                                                    echo '<td><button type="button" class="btn btn-outline btn-danger btn-sm btnDelete">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                          </button></td>';    
+                                                    echo '</tr>';
+                                                    
+                                                }
+                                            } 
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -233,6 +229,14 @@ include('../phpObjects/connect.php');
                         <!-- /.panel-body -->
                     </div>
                    
+                </div>
+                <div class="col-lg-4">
+                    <form method="post" action="" id="formeditfood">
+                        #<label id="foodid"></label>
+                        <input type="text" class="form-control" id="txtupdatefood" required>
+                        <br/>
+                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -251,6 +255,114 @@ include('../phpObjects/connect.php');
     <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
     <script src="custom/myfunction.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+    $("td.bestseller:contains('1')").closest('tr.delicacy').css('background-color', 'rgba(238,162,54,0.5)');
+
+    // This button will mark the food as best seller 
+    $('body').on('click', '.btnBestSeller', function(){
+        var foodid = $(this).parents('tr:eq(0)').find('td:eq(0)').text();
+        var isbest = $(this).parents('tr:eq(0)').find('td:eq(2)').text();
+        var best;
+
+        if(isbest == "0")
+        {
+            best = "1";
+            $.ajax({
+                type:'POST',
+                url:'../phpObjects/toAddBestSellerFood.php',
+                data: {
+                        foodid:foodid,
+                        best:best 
+                    }
+                    }).done(function(data){
+                    
+                    location.reload();
+                });
+        }
+        else if(isbest == "1")
+        {
+            best = "0";
+            $.ajax({
+                type:'POST',
+                url:'../phpObjects/toAddBestSellerFood.php',
+                data: {
+                        foodid:foodid,
+                        best:best
+                    }
+                    }).done(function(data){
+                    
+                    location.reload();
+                });
+
+        }
+       
+        
+    });
+
+// This button will mark the food as best seller 
+    $('body').on('click', '.btnDelete', function(){
+        var foodid = $(this).parents('tr:eq(0)').find('td:eq(0)').text();
+        
+            $.ajax({
+                type:'POST',
+                url:'../phpObjects/toDeleteFood.php',
+                data: {
+                        foodid:foodid
+                    }
+                    }).done(function(data){
+                    
+                    location.reload();
+                });
+      
+    });
+
+// Select food to update 
+    $('body').on('click', '.btnEdit', function(){
+        var foodid      = $(this).parents('tr:eq(0)').find('td:eq(0)').text();
+        var foodname    = $(this).parents('tr:eq(0)').find('td:eq(1)').text();
+
+           $("#foodid").text(foodid);
+           $("#txtupdatefood").val(foodname);
+      
+    });
+// Update selected food
+    $("#formeditfood").submit(function(){
+        var foodid = $("#foodid").text();
+        var txtupdatefood = $("#txtupdatefood").val();
+
+                $.ajax({
+                    type:'POST',
+                    url:'../phpObjects/toUpdateFood.php',
+                    data: {
+                            foodid:foodid,
+                            txtupdatefood:txtupdatefood
+                        }
+                        }).done(function(data){
+                        
+                        location.reload();
+                    });
+    });
+
+// Add Food function
+    $("#formaddfood").submit(function(){
+        var txtfoodadd = $("#txtfoodadd").val();
+        var sess_restid = $.trim($("#sess_restid").text());
+        $.ajax({
+                    type:'POST',
+                    url:'../phpObjects/toAddFood.php',
+                    data: {
+                            txtfoodadd:txtfoodadd,
+                            sess_restid:sess_restid
+                        }
+                        }).done(function(data){
+                        
+                        location.reload();
+                    });
+        return false;
+    });
+});
+</script>
 
 </body>
 

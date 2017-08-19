@@ -44,7 +44,8 @@ include('../phpObjects/connect.php');
             border:0.5px solid rgba(100,100,100,0.5);
             padding:5px;
             margin:5px;
-            margin-left:0px;
+            margin-left:15px;
+
         }
         
         div.mymodalheader1
@@ -91,7 +92,7 @@ include('../phpObjects/connect.php');
         {
             display: none;
         }
-
+        
     </style>
 
 </head>
@@ -204,7 +205,7 @@ include('../phpObjects/connect.php');
                 </div>
                 <hr>
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-10">
                     
                             <div class="outputhere">  
                                 

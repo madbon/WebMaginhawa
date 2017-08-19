@@ -17,6 +17,11 @@ include('../phpObjects/connect.php');
     <!-- Customized CSS for General Interface -->
     <link href="custom/mystyle.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="../img/tabicon.ico" />
+    <!--  CSS for confirm  -->
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.less" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/libs/bundled.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/demo.css">
     <!-- Bootstrap Core CSS -->
     <link href="../responsivetools/sbadmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -27,12 +32,7 @@ include('../phpObjects/connect.php');
     <link href="../responsivetools/sbadmin/vendor/morrisjs/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="../responsivetools/sbadmin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  
 
     <style>
     img.postedimage
@@ -49,6 +49,10 @@ include('../phpObjects/connect.php');
     {
         background-color: rgb(24,188,156);
         color: white;
+    }
+    #restid,#baseusername
+    {
+        display: none;
     }
    
     </style>
@@ -96,6 +100,8 @@ include('../phpObjects/connect.php');
                                         while($row2 = $result2->fetch_assoc()) {
                                             echo '<img src="'.'img/'.$row2['ICON'].'" class="profilepic" width="200" height="200"/>'; 
                                             echo '<h3 id="restorowname">'.$row2['NAME'].'</h3>';
+                                            echo '<h3 id="restid">'.$row2['REST_ID'].'</h3>';
+                                            echo '<h3 id="baseusername">'.$row2['USERNAME'].'</h3>';
                                             
                                         }
                                     } 
@@ -146,17 +152,21 @@ include('../phpObjects/connect.php');
             </div>
             <div class="row">
                     <div class="col-lg-8">
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input class="form-control">
-                             <label>Password</label>
-                            <input class="form-control">
-                             <label>Confirm Password</label>
-                            <input class="form-control">
-                        </div>
+                        <form method="post" action="" id="formaccountsettings">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input class="form-control" id="username" required>
+                                 <label>Password</label>
+                                <input type="password" class="form-control" id="password" required>
+                                 <label>Confirm Password</label>
+                                <input type="password" class="form-control" id="repassword" required>
+                                <br/>
+                                <button type="submit" class="btn btn-outline btn-success btn-sm">Save</button>
+                            </div>
+                        </form>
                        
                        <!--  &nbsp;&nbsp;&nbsp;&nbsp; -->
-                        <button type="button" class="btn btn-outline btn-success btn-sm">Save</button>
+                        
                     </div>
                 </div>
                 <hr>
@@ -173,7 +183,66 @@ include('../phpObjects/connect.php');
     <script src="../responsivetools/sbadmin/vendor/metisMenu/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
+    <!-- Custom JS -->
     <script src="custom/myfunction.js"></script>
+     <!--JS for Confirm-->
+    <script src="../responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
+    <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
+
+    <script type="text/javascript">
+    $("#username").val($("#baseusername").text());
+
+    $("#formaccountsettings").submit(function(){
+        var username    = $("#username").val();
+        var password    = $("#password").val();
+        var repassword  = $("#repassword").val();
+        var restid      = $.trim($("#restid").text());
+
+        if(password == repassword)
+        {
+                $.confirm({
+                            title: '',
+                            content: 'Are you sure you want to change your username/password?',
+                            icon: 'fa fa-question-circle',
+                            animation: 'scale',
+                            closeAnimation: 'scale',
+                            opacity: 0.5,
+                            buttons: {
+                                'confirm': {
+                                    text: 'Proceed',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+
+                                          $.ajax({
+                                                type:'POST',
+                                                url:'../phpObjects/toUpdateAccount.php',
+                                                data: {
+                                                        restid:restid,
+                                                        username:username,
+                                                        password:password
+                                                    }
+                                                    }).done(function(data){
+                                                    
+                                                    location.reload();
+                                                });
+                                    }
+                                },
+                                cancel: function () {
+                                    $.alert('you clicked on <strong>cancel</strong>');
+                                },
+                            }
+                                    
+                        });
+        }
+        else
+        {
+            $.alert("Password does not match!");
+        }
+
+    
+            return false;
+    });
+    </script>
 
 </body>
 

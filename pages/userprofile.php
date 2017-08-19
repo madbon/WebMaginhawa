@@ -95,8 +95,8 @@ include('../phpObjects/connect.php');
                                         while($row2 = $result2->fetch_assoc()) {
                                             echo '<img src="'.'img/'.$row2['ICON'].'" class="profilepic" width="200" height="200"/>'; 
                                             echo '<h3 id="restorowname">'.$row2['NAME'].'</h3>';
-                                            echo '<h3 id="blogh3">'.$row2['CONTACT_INFO'].'</h3>';
-                                            echo '<h3 id="contacth3">'.$row2['BLOG_WEB_URL'].'</h3>';
+                                            echo '<h3 id="contacth3">'.$row2['CONTACT_INFO'].'</h3>';
+                                            echo '<h3 id="blogh3">'.$row2['BLOG_WEB_URL'].'</h3>';
                                         }
                                     } 
                                 ?>
@@ -201,6 +201,7 @@ include('../phpObjects/connect.php');
     $(document).ready(function(){
         $("#blogweb").val($("#blogh3").text());
         $("#contact").val($("#contacth3").text());
+        $("#restname").val($("#restorowname").text());
         $("#formchangename").submit(function(){
             var restname = $("#restname").val();
             $.confirm({

@@ -155,30 +155,20 @@ include('../phpObjects/connect.php');
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Adobo</td>
-                                            <td>
-                                                <button type="button" class="btn btn-outline btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Caldereta</td>
-                                             <td>
-                                                <button type="button" class="btn btn-outline btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Kare-Kare</td>
-                                             <td>
-                                                <button type="button" class="btn btn-outline btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                         <?php
+                                            $sess_restid = $_SESSION["REST_ID"];
+                                            $sql2 = "SELECT * FROM tbl_food WHERE (REST_ID ='$sess_restid' AND IS_BEST = '1') AND IS_ACTIVE=1 ";
+                                            $result2 = $conn->query($sql2);
+                                            if ($result2->num_rows > 0) {
+                                                while($row2 = $result2->fetch_assoc()) {
+                                                    echo '<tr class="delicacy">';
+                                                    echo '<td>'.$row2['FOOD_ID'].'</td>';
+                                                    echo '<td>'.$row2['FOOD_NAME'].'</td>';
+                                                    echo '</tr>';
+                                                    
+                                                }
+                                            } 
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>

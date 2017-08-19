@@ -17,6 +17,11 @@ include('../phpObjects/connect.php');
     <!-- Customized CSS for General Interface -->
     <link href="custom/mystyle.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="../img/tabicon.ico" />
+    <!--  CSS for confirm  -->
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.less" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/libs/bundled.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/demo.css">
     <!-- Bootstrap Core CSS -->
     <link href="../responsivetools/sbadmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -73,6 +78,10 @@ include('../phpObjects/connect.php');
     div.mypanelfooter1
     {
 
+    }
+    #restid
+    {
+        display: none;
     }
    
    
@@ -173,16 +182,28 @@ include('../phpObjects/connect.php');
                     <center>
                         <br/>
                             <img src="../img/table.png" class="myimagehistory">
-                            <h3>Can accomodate 43 customers</h3>   
+                            <h3>Can accomodate <?php
+                                    $sess_restid = $_SESSION["REST_ID"];
+                                    $sql2 = "SELECT * FROM tbl_rest_registration WHERE REST_ID ='$sess_restid' AND IS_ACTIVE=1 ";
+                                    $result2 = $conn->query($sql2);
+                                    if ($result2->num_rows > 0) {
+                                        while($row2 = $result2->fetch_assoc()) {
+                                            echo $row2['CAPACITY_CHAIRS'];
+                                            echo '<p id="restid">'.$row2['REST_ID'].'</p>';
+                                        }
+                                    } 
+                                ?> customers</h3>   
                     </center>
                    
                     <div class="row">
                         <br/>
                         <div class="col-lg-8">
-                            <label>How many customers can be accommodated?</label>
-                            <textarea class="form-control"></textarea>
-                            <br/>
-                            <button class="btn btn-sm btn-success btn-outline">Update</button>
+                            <form method="post" action="" id="formchairs">
+                                <label>How many customers can be accommodated?</label>
+                                <input type="number" class="form-control" id="txtcapacity">
+                                <br/>
+                                <button type="submit" class="btn btn-sm btn-success btn-outline">Update</button>
+                            </form>
                         </div>
                     </div>
                     <br/>
@@ -202,7 +223,49 @@ include('../phpObjects/connect.php');
     <script src="../responsivetools/sbadmin/vendor/metisMenu/metisMenu.min.js"></script>
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
     <script src="custom/myfunction.js"></script>
+     <!--JS for Confirm-->
+    <script src="../responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
+    <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
 
+    <script type="text/javascript">
+        $("#formchairs").submit(function(){
+            var txtcapacity = $("#txtcapacity").val();
+            var restid = $("#restid").text();
+            $.confirm({
+                            title: '',
+                            content: 'Are you sure you want to update the number of seats?',
+                            icon: 'fa fa-question-circle',
+                            animation: 'scale',
+                            closeAnimation: 'scale',
+                            opacity: 0.5,
+                            buttons: {
+                                'confirm': {
+                                    text: 'Proceed',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+
+                                          $.ajax({
+                                                type:'POST',
+                                                url:'../phpObjects/toUpdateCapacityChairs.php',
+                                                data: {
+                                                        restid:restid,
+                                                        txtcapacity:txtcapacity
+                                                    }
+                                                    }).done(function(data){
+                                                    
+                                                    location.reload();
+                                                });
+                                    }
+                                },
+                                cancel: function () {
+                                    $.alert('you clicked on <strong>cancel</strong>');
+                                },
+                            }
+                                    
+                        });
+            return false;
+        });
+    </script>
 
 </body>
 

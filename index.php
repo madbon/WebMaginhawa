@@ -219,11 +219,17 @@ else
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
+                        <!-- Latitude -->
+                         <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <button type="button" class="btn btn-primary form-control" id="getlatlong">Get the Latitude and Longitude</button>
+                            </div>
+                        </div>
                          <!-- Latitude -->
                          <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label for="latitude">Latitude</label>
-                                <input type="text" class="form-control" placeholder="Latitude" name="latitude" id="latitude">
+                                <input type="text" class="form-control" placeholder="Latitude" name="latitude" id="latitude" disabled>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -231,7 +237,7 @@ else
                          <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label for="longitude">Longitude</label>
-                                <input type="text" class="form-control" placeholder="Longitude" name="longitude" id="longitude">
+                                <input type="text" class="form-control" placeholder="Longitude" name="longitude" id="longitude" disabled>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -309,8 +315,7 @@ else
 
 <script type="text/javascript">
 $(document).ready(function(){
-                        $("#latitude").click(function(){
-
+                        $("#getlatlong").click(function(){
                             var address = $("#completeaddress").val();
                             var geocoder =  new google.maps.Geocoder();
                                 geocoder.geocode( { 'address': address}, function(results, status) {
@@ -325,7 +330,7 @@ $(document).ready(function(){
                                       }
                                 });
                         });
-
+                        
                         $('#formregister').submit(function(){ 
                             var name                = $("#name").val();
                             var ownername           = $("#ownername").val();
@@ -390,6 +395,7 @@ $(document).ready(function(){
                             {
                                 $.alert('Password does not match!');
                             }
+
                            
                     return false;
                 });   

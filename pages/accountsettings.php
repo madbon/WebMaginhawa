@@ -1,3 +1,7 @@
+<?php 
+include('Session/session_user.php');
+include('../phpObjects/connect.php');
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,9 +75,7 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="accountsettings.html"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
+                        <li><a href="accountsettings.php"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -86,37 +88,50 @@
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
-                                <img src="../img/cautionhot.jpg" height="200" width="200">
-                                <h3>CAUTION HOT</h3>
+                                 <?php
+                                    $sess_restid = $_SESSION["REST_ID"];
+                                    $sql2 = "SELECT * FROM tbl_rest_registration WHERE REST_ID ='$sess_restid' AND IS_ACTIVE=1 ";
+                                    $result2 = $conn->query($sql2);
+                                    if ($result2->num_rows > 0) {
+                                        while($row2 = $result2->fetch_assoc()) {
+                                            echo '<img src="'.'img/'.$row2['ICON'].'" class="profilepic" width="200" height="200"/>'; 
+                                            echo '<h3 id="restorowname">'.$row2['NAME'].'</h3>';
+                                            
+                                        }
+                                    } 
+                                ?>
+                                 <div class="hover-profile-pic">
+                                    <div class="btn btn-sm btn-info hoverbutton">Change Profile</div>
+                                </div>
                             </div>
                         </li>
                         <!-- Home Level -->
                         <li>
-                            <a href="index.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+                            <a href="home.php"><i class="glyphicon glyphicon-home"></i> Home</a>
                         </li>
                         <!-- History Level -->
                         <li>
-                            <a href="history.html"><i class="glyphicon glyphicon-info-sign"></i> History</a>
+                            <a href="history.php"><i class="glyphicon glyphicon-info-sign"></i> History</a>
                         </li>
                         <!-- Food level -->
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-cutlery"></i> Food<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="delicacy.html">List of Delicacies</a>
+                                    <a href="delicacy.php">List of Delicacies</a>
                                 </li>
                                 <li>
-                                    <a href="bestseller.html">Best Seller</a>
+                                    <a href="bestseller.php">Best Seller</a>
                                 </li>
                             </ul>
                         </li>
                         <!-- Location Level -->
                         <li>
-                            <a href="location.html"><i class="glyphicon glyphicon-map-marker"></i> Location</a>
+                            <a href="location.php"><i class="glyphicon glyphicon-map-marker"></i> Location</a>
                         </li>
                         <!-- Capacity Level -->
                         <li>
-                            <a href="capacity.html"><i class="glyphicon glyphicon-glass"></i> Capacity</a>
+                            <a href="capacity.php"><i class="glyphicon glyphicon-glass"></i> Capacity</a>
                         </li>
                     </ul>
                 </div>
@@ -156,20 +171,9 @@
     <script src="../responsivetools/sbadmin/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../responsivetools/sbadmin/vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <script src="../responsivetools/sbadmin/vendor/raphael/raphael.min.js"></script>
-    <script src="../responsivetools/sbadmin/vendor/morrisjs/morris.min.js"></script>
-    <script src="../responsivetools/sbadmin/data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
-
-</body>
-
-</html>
-sivetools/sbadmin/vendor/morrisjs/morris.min.js"></script>
-    <script src="../responsivetools/sbadmin/data/morris-data.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
+    <script src="custom/myfunction.js"></script>
 
 </body>
 

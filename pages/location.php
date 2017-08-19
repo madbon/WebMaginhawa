@@ -1,3 +1,7 @@
+<?php 
+include('Session/session_user.php');
+include('../phpObjects/connect.php');
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,22 +27,17 @@
     <link href="../responsivetools/sbadmin/vendor/morrisjs/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="../responsivetools/sbadmin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
     <style>
-    img.postedimage
+   img.myimagehistory
+   {
+    height: 300px;
+    width: 300px;
+   }
+
+    #compaddressrow, #latituderow, #longituderow
     {
-        height: 200px;
-        width: 200px;
-        border:0.5px solid lightblue;
-        padding:5px;
-        margin:5px;
-        margin-left:0px;
+        display: none;
     }
     
    
@@ -80,8 +79,24 @@
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
-                                <img src="../img/cautionhot.jpg" height="200" width="200">
-                                <h3>CAUTION HOT</h3>
+                               <?php
+                                    $sess_restid = $_SESSION["REST_ID"];
+                                    $sql2 = "SELECT * FROM tbl_rest_registration WHERE REST_ID ='$sess_restid' AND IS_ACTIVE=1 ";
+                                    $result2 = $conn->query($sql2);
+                                    if ($result2->num_rows > 0) {
+                                        while($row2 = $result2->fetch_assoc()) {
+                                            echo '<img src="'.'img/'.$row2['ICON'].'" class="profilepic" width="200" height="200"/>'; 
+                                            echo '<h3 id="restorowname">'.$row2['NAME'].'</h3>';
+                                            echo '<h3 id="compaddressrow">'.$row2['COMP_ADDRESS'].'</h3>';
+                                            echo '<h3 id="latituderow">'.$row2['LAT'].'</h3>';
+                                            echo '<h3 id="longituderow">'.$row2['LONGI'].'</h3>';
+
+                                        }
+                                    } 
+                                ?>
+                                 <div class="hover-profile-pic">
+                                    <div class="btn btn-sm btn-info hoverbutton">Change Profile</div>
+                                </div>
                             </div>
                         </li>
                         <!-- Home Level -->
@@ -133,12 +148,12 @@
                         <br/>
                         <div class="col-lg-8">
                             <label>Complete Address</label>
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" id="txtcompaddress"></textarea>
                             <label></label>
                             <label>Latitude</label>
-                            <input class="form-control">
+                            <input class="form-control" id="txtlat">
                             <label>Longitude</label>
-                            <input class="form-control">
+                            <input class="form-control" id="txtlong">
                             <br/>
                             <button class="btn btn-sm btn-success btn-outline">Save location</button>
                         </div>
@@ -160,8 +175,15 @@
     <script src="../responsivetools/sbadmin/vendor/metisMenu/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
-
-
+    <script src="custom/myfunction.js"></script>
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("#txtcompaddress").val($("#compaddressrow").text());
+        $("#txtlat").val($("#latituderow").text());
+        $("#txtlong").val($("#longituderow").text());
+    });
+    </script>
 </body>
 
 </html>

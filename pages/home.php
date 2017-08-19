@@ -82,24 +82,7 @@ include('../phpObjects/connect.php');
             display: none;
         }
 
-        /*------- Custom*/
-        div.hover-profile-pic
-        {
-            /*background-color: rgba(255,255,255,0.5);*/
-            width: 200px;
-            height: 200px;
-            position: absolute;
-            bottom: 56px;
-            display: none;
-        }
-        .hoverbutton
-        {
-            
-            margin-left: 50px;
-            width: 100px;
-            margin-top: 100px;
-
-        }
+       
         p.imgid, p#imgpostid
         {
             display: none;
@@ -153,6 +136,7 @@ include('../phpObjects/connect.php');
                                         while($row2 = $result2->fetch_assoc()) {
                                             echo '<img src="'.'img/'.$row2['ICON'].'" class="profilepic" width="200" height="200"/>';
                                             echo '<h3>'.$row2['NAME'].'</h3>';
+                                            
                                         }
                                     } 
                                 ?>
@@ -325,33 +309,14 @@ include('../phpObjects/connect.php');
     <!--JS for Confirm-->
     <script src="../responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
     <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
+    <!-- custom JS -->
+    <script src="custom/myfunction.js"></script>
 
     <script type="text/javascript">
 
         $(document).ready(function(){
             var deletepostid;
             $(".loader").hide();
-
-            $(".hoverbutton").click(function(){
-                window.location.href = "userprofile.php";
-            });
-
-            $(".profilepic").mouseover(function(){
-                $(".hover-profile-pic").show();
-
-            });
-            $(".hover-profile-pic").mouseout(function(){
-                $(".hover-profile-pic").hide();
-
-            });
-            $(".hoverbutton").mouseout(function(){
-                $(".hover-profile-pic").show();
-                $(this).show();
-            });
-             $(".hoverbutton").mouseover(function(){
-                $(".hover-profile-pic").show();
-            });
-
             $("changephoto").click(function(){
                 $("#editimages").show();
                 $("#inputhide").val("1");

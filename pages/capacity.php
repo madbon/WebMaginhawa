@@ -1,3 +1,7 @@
+<?php 
+include('Session/session_user.php');
+include('../phpObjects/connect.php');
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,13 +27,7 @@
     <link href="../responsivetools/sbadmin/vendor/morrisjs/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="../responsivetools/sbadmin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+ 
     <style>
     img.postedimage
     {
@@ -115,8 +113,21 @@
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                           <div class="input-group custom-search-form">
-                                <img src="../img/cautionhot.jpg" height="200" width="200">
-                                <h3>CAUTION HOT</h3>
+                                <?php
+                                    $sess_restid = $_SESSION["REST_ID"];
+                                    $sql2 = "SELECT * FROM tbl_rest_registration WHERE REST_ID ='$sess_restid' AND IS_ACTIVE=1 ";
+                                    $result2 = $conn->query($sql2);
+                                    if ($result2->num_rows > 0) {
+                                        while($row2 = $result2->fetch_assoc()) {
+                                            echo '<img src="'.'img/'.$row2['ICON'].'" class="profilepic" width="200" height="200"/>'; 
+                                            echo '<h3 id="restorowname">'.$row2['NAME'].'</h3>';
+
+                                        }
+                                    } 
+                                ?>
+                                 <div class="hover-profile-pic">
+                                    <div class="btn btn-sm btn-info hoverbutton">Change Profile</div>
+                                </div>
                             </div>
                         </li>
                         <!-- Home Level -->
@@ -190,7 +201,7 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../responsivetools/sbadmin/vendor/metisMenu/metisMenu.min.js"></script>
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
-
+    <script src="custom/myfunction.js"></script>
 
 
 </body>

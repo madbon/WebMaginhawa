@@ -123,8 +123,21 @@ include('../phpObjects/connect.php');
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                            <div class="input-group custom-search-form">
-                                <img src="../img/cautionhot.jpg" height="200" width="200">
-                                <h3>CAUTION HOT</h3>
+                                <?php
+                                    $sess_restid = $_SESSION["REST_ID"];
+                                    $sql2 = "SELECT * FROM tbl_rest_registration WHERE REST_ID ='$sess_restid' AND IS_ACTIVE=1 ";
+                                    $result2 = $conn->query($sql2);
+                                    if ($result2->num_rows > 0) {
+                                        while($row2 = $result2->fetch_assoc()) {
+                                            echo '<img src="'.'img/'.$row2['ICON'].'" class="profilepic" width="200" height="200"/>'; 
+                                            echo '<h3 id="restorowname">'.$row2['NAME'].'</h3>';
+                                            
+                                        }
+                                    } 
+                                ?>
+                                <div class="hover-profile-pic">
+                                    <div class="btn btn-sm btn-info hoverbutton">Change Profile</div>
+                                </div>
                             </div>
                         </li>
                         <!-- Home Level -->
@@ -224,6 +237,7 @@ include('../phpObjects/connect.php');
     <!--JS for Confirm-->
     <script src="../responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
     <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
+    <script src="custom/myfunction.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function(){

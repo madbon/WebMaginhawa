@@ -100,7 +100,9 @@ include('../phpObjects/connect.php');
                                         }
                                     } 
                                 ?>
-                               
+                                <div class="hover-profile-pic">
+                                    <div class="btn btn-sm btn-info hoverbutton">Change Profile</div>
+                                </div>
                             </div>
                         </li>
                         <!-- Home Level -->
@@ -193,6 +195,7 @@ include('../phpObjects/connect.php');
      <!--JS for Confirm-->
     <script src="../responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
     <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
+    <script src="custom/myfunction.js"></script>
 
     <script type="text/javascript">
     $(document).ready(function(){

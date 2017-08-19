@@ -9,10 +9,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kustara CP | Best Seller</title>
+    <title>Kutsara CP | Food</title>
     <!-- Customized CSS for General Interface -->
     <link href="custom/mystyle.css" rel="stylesheet" type="text/css">
-    <link href="custom/mystyle.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="../img/tabicon.ico" />
+     <!--  CSS for confirm  -->
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.less" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/libs/bundled.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/demo.css" type="text/css">
     <!-- Bootstrap Core CSS -->
     <link href="../responsivetools/sbadmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -41,6 +46,11 @@
         margin-left:0px;
     }
     
+    div.mymodalheader1
+    {
+        background-color: rgb(24,188,156);
+        color: white;
+    }
     button.mybuttonlegend
     {
         border:0;
@@ -61,7 +71,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" id="mynavbar-brand" href="home.php">Kutsara Control Panel</a>
+                <a class="navbar-brand" id="mynavbar-brand" href="#">Kutsara Control Panel</a>
             </div>
             <ul class="nav navbar-top-links navbar-right">
             
@@ -70,12 +80,10 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="accountsettings.html"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
+                        <li><a href="accountsettings.php"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="..\index.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </li>
@@ -84,7 +92,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
+                           <div class="input-group custom-search-form">
                                 <img src="../img/cautionhot.jpg" height="200" width="200">
                                 <h3>CAUTION HOT</h3>
                             </div>
@@ -95,27 +103,27 @@
                         </li>
                         <!-- History Level -->
                         <li>
-                            <a href="history.html"><i class="glyphicon glyphicon-info-sign"></i> History</a>
+                            <a href="history.php"><i class="glyphicon glyphicon-info-sign"></i> History</a>
                         </li>
                         <!-- Food level -->
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-cutlery"></i> Food<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="delicacy.html">List of Delicacies</a>
+                                    <a href="delicacy.php">List of Delicacies</a>
                                 </li>
                                 <li>
-                                    <a href="bestseller.html">Best Seller</a>
+                                    <a href="bestseller.php">Best Seller</a>
                                 </li>
                             </ul>
                         </li>
                         <!-- Location Level -->
                         <li>
-                            <a href="location.html"><i class="glyphicon glyphicon-map-marker"></i> Location</a>
+                            <a href="location.php"><i class="glyphicon glyphicon-map-marker"></i> Location</a>
                         </li>
                         <!-- Capacity Level -->
                         <li>
-                            <a href="capacity.html"><i class="glyphicon glyphicon-glass"></i> Capacity</a>
+                            <a href="capacity.php"><i class="glyphicon glyphicon-glass"></i> Capacity</a>
                         </li>
                     </ul>
                 </div>
@@ -123,13 +131,37 @@
         </nav>
 
         <div id="page-wrapper">
-            <br/>
-            <h2>Our Best Seller</h2>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Add Food</h3>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <textarea class="form-control"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-outline btn-success btn-sm">Save</button>
+                    </div>
+                </div>
                 <hr>
             <div class="row">
                 <div class="col-lg-8">
                     <!-- Whole body of post -->
                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Delicacies &nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-outline btn-warning btn-sm mybuttonlegend">
+                                <i class="glyphicon glyphicon-heart-empty"> </i>
+                            </button> Mark as best seller &nbsp;&nbsp;
+                            <button type="button" class="btn btn-outline btn-info btn-sm mybuttonlegend">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </button> Edit food name &nbsp;&nbsp;
+                            <button type="button" class="btn btn-outline btn-danger btn-sm mybuttonlegend">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button> Delete Food &nbsp;&nbsp;
+                        </div>
+                        <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table">
@@ -145,6 +177,10 @@
                                             <td>3</td>
                                             <td>Adobo</td>
                                             <td>
+                                                <button type="button" class="btn btn-outline btn-warning btn-sm"><i class="glyphicon glyphicon-heart-empty"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline btn-info btn-sm"><i class="glyphicon glyphicon-pencil"></i>
+                                                </button>
                                                 <button type="button" class="btn btn-outline btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i>
                                                 </button>
                                             </td>
@@ -153,6 +189,10 @@
                                             <td>4</td>
                                             <td>Caldereta</td>
                                              <td>
+                                              <button type="button" class="btn btn-outline btn-warning btn-sm"><i class="glyphicon glyphicon-heart-empty"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline btn-info btn-sm"><i class="glyphicon glyphicon-pencil"></i>
+                                                </button>
                                                 <button type="button" class="btn btn-outline btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i>
                                                 </button>
                                             </td>
@@ -161,6 +201,10 @@
                                             <td>5</td>
                                             <td>Kare-Kare</td>
                                              <td>
+                                                <button type="button" class="btn btn-outline btn-warning btn-sm"><i class="glyphicon glyphicon-heart-empty"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline btn-info btn-sm"><i class="glyphicon glyphicon-pencil"></i>
+                                                </button>
                                                 <button type="button" class="btn btn-outline btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i>
                                                 </button>
                                             </td>
@@ -178,49 +222,18 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="container">
-      <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header mymodalheader1">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Edit Post</h4>
-            </div>
-            <div class="modal-body">
-              <textarea class="form-control"></textarea>
-              <br/>
-              <button type="button" class="btn btn-outline btn-info btn-sm">Change Photo</button>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline btn-success" data-dismiss="modal">Save</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- jQuery -->
+   <!-- jQuery -->
     <script src="../responsivetools/sbadmin/vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="../responsivetools/sbadmin/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../responsivetools/sbadmin/vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <script src="../responsivetools/sbadmin/vendor/raphael/raphael.min.js"></script>
-    <script src="../responsivetools/sbadmin/vendor/morrisjs/morris.min.js"></script>
-    <script src="../responsivetools/sbadmin/data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
+    <!--JS for Confirm-->
+    <script src="../responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
+    <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
 
-</body>
-
-</html>
-../responsivetools/sbadmin/vendor/raphael/raphael.min.js"></script>
-    <script src="../responsivetools/sbadmin/vendor/morrisjs/morris.min.js"></script>
-    <script src="../responsivetools/sbadmin/data/morris-data.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
 
 </body>
 

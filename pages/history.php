@@ -1,3 +1,7 @@
+<?php 
+include('Session/session_user.php');
+include('../phpObjects/connect.php');
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +17,11 @@
     <!-- Customized CSS for General Interface -->
     <link href="custom/mystyle.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="../img/tabicon.ico" />
+     <!--  CSS for confirm  -->
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/css/jquery-confirm.less" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/libs/bundled.css" type="text/css">
+    <link rel="stylesheet" href="../responsivetools/jquery-confirm/demo/demo.css" type="text/css">
     <!-- Bootstrap Core CSS -->
     <link href="../responsivetools/sbadmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -101,9 +110,7 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="accountsettings.html"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
+                        <li><a href="accountsettings.php"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -126,30 +133,31 @@
                         </li>
                         <!-- History Level -->
                         <li>
-                            <a href="history.html"><i class="glyphicon glyphicon-info-sign"></i> History</a>
+                            <a href="history.php"><i class="glyphicon glyphicon-info-sign"></i> History</a>
                         </li>
                         <!-- Food level -->
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-cutlery"></i> Food<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="delicacy.html">List of Delicacies</a>
+                                    <a href="delicacy.php">List of Delicacies</a>
                                 </li>
                                 <li>
-                                    <a href="bestseller.html">Best Seller</a>
+                                    <a href="bestseller.php">Best Seller</a>
                                 </li>
                             </ul>
                         </li>
                         <!-- Location Level -->
                         <li>
-                            <a href="location.html"><i class="glyphicon glyphicon-map-marker"></i> Location</a>
+                            <a href="location.php"><i class="glyphicon glyphicon-map-marker"></i> Location</a>
                         </li>
                         <!-- Capacity Level -->
                         <li>
-                            <a href="capacity.html"><i class="glyphicon glyphicon-glass"></i> Capacity</a>
+                            <a href="capacity.php"><i class="glyphicon glyphicon-glass"></i> Capacity</a>
                         </li>
                     </ul>
                 </div>
+
             </div>
         </nav>
 
@@ -160,24 +168,37 @@
             <div class="row">
 
                 <div class="col-lg-12">
-                    <textarea class="form-control mytextareahistory"></textarea>
+                   
                     <br/>
-                    <button type="button" class="btn btn-outline btn-info btn-sm">Import Image</button>
-                    <button type="button" class="btn btn-outline btn-success btn-sm"> Change History</button>
-
+                    <form method="post" action="" id="formchangehistory">
+                        <textarea class="form-control mytextareahistory" id="textareahistory"></textarea>
+                        <button type="button" class="btn btn-outline btn-info btn-sm" id="changehistory"> 
+                            Change History
+                        </button>
+                        <button type="submit" class="btn btn-outline btn-success btn-sm" id="btnSave"> 
+                            Save
+                        </button>
+                    </form>
                     <center>
                         <br/>
-                        <div class="mypanel">
+                        <!-- <div class="mypanel">
                             <img src="../img/temple.png" class="myimagehistory">   
-                        </div>
+                        </div> -->
                         <div class="mypanelfooter1">
                         </div>
                     </center>
-                    <p class="myp-body">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.
-
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.
-                    </p>
+                    
+                        <?php
+                                    $sess_restid = $_SESSION["REST_ID"];
+                                    $sql2 = "SELECT * FROM tbl_rest_registration WHERE REST_ID ='$sess_restid' AND IS_ACTIVE=1 ";
+                                    $result2 = $conn->query($sql2);
+                                    if ($result2->num_rows > 0) {
+                                        while($row2 = $result2->fetch_assoc()) {
+                                            echo '<p id="existshistory" class="myp-body">'.$row2['HISTORY'].'</p>';
+                                        }
+                                    } 
+                        ?>
+                   
                         
                             <!-- <img src="../img/temple.png" class="myimagehistory"> -->
                         
@@ -198,13 +219,56 @@
     <script src="../responsivetools/sbadmin/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../responsivetools/sbadmin/vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <script src="../responsivetools/sbadmin/vendor/raphael/raphael.min.js"></script>
-    <script src="../responsivetools/sbadmin/vendor/morrisjs/morris.min.js"></script>
-    <script src="../responsivetools/sbadmin/data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
+    <!--JS for Confirm-->
+    <script src="../responsivetools/jquery-confirm/js/jquery-confirm.js"></script>
+    <script async src="../responsivetools/jquery-confirm/js/sync-confirm.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#changehistory").click(function(){
+            var existshistory = $("#existshistory").text();
+            $("#textareahistory").val(existshistory);
+
+        });
+
+        $("#formchangehistory").submit(function(){
+            var textareahistory = $("#textareahistory").val();
+            $.confirm({
+                            title: '',
+                            content: 'Are you sure you want save it?',
+                            icon: 'fa fa-question-circle',
+                            animation: 'scale',
+                            closeAnimation: 'scale',
+                            opacity: 0.5,
+                            buttons: {
+                                'confirm': {
+                                    text: 'Proceed',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+                                                    $.ajax({
+                                                        type:'POST',
+                                                        url:'../phpObjects/toUpdateHistory.php',
+                                                        data: {
+                                                        textareahistory:textareahistory
+                                                        }
+                                                        }).done(function(data){
+                                                            $.alert('Successfully Saved');
+                                                           
+                                                    });
+                                    }
+                                },
+                                cancel: function () {
+                                    $.alert('you clicked on <strong>cancel</strong>');
+                                },
+                            }       
+                        });
+            return false;
+        });
+
+    });
+</script>
 </body>
 
 </html>

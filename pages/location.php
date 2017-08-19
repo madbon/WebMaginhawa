@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kutsara CP | User Profile</title>
+    <title>Kutsara CP | Location</title>
     <!-- Customized CSS for General Interface -->
     <link href="custom/mystyle.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="../img/tabicon.ico" />
@@ -40,7 +40,8 @@
         margin:5px;
         margin-left:0px;
     }
-       
+    
+   
    
     </style>
 
@@ -66,12 +67,10 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="accountsettings.html"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
+                        <li><a href="accountsettings.php"><i class="fa fa-gear fa-fw"></i>Account Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="..\index.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </li>
@@ -91,27 +90,27 @@
                         </li>
                         <!-- History Level -->
                         <li>
-                            <a href="history.html"><i class="glyphicon glyphicon-info-sign"></i> History</a>
+                            <a href="history.php"><i class="glyphicon glyphicon-info-sign"></i> History</a>
                         </li>
                         <!-- Food level -->
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-cutlery"></i> Food<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="delicacy.html">List of Delicacies</a>
+                                    <a href="delicacy.php">List of Delicacies</a>
                                 </li>
                                 <li>
-                                    <a href="bestseller.html">Best Seller</a>
+                                    <a href="bestseller.php">Best Seller</a>
                                 </li>
                             </ul>
                         </li>
                         <!-- Location Level -->
                         <li>
-                            <a href="location.html"><i class="glyphicon glyphicon-map-marker"></i> Location</a>
+                            <a href="location.php"><i class="glyphicon glyphicon-map-marker"></i> Location</a>
                         </li>
                         <!-- Capacity Level -->
                         <li>
-                            <a href="capacity.html"><i class="glyphicon glyphicon-glass"></i> Capacity</a>
+                            <a href="capacity.php"><i class="glyphicon glyphicon-glass"></i> Capacity</a>
                         </li>
                     </ul>
                 </div>
@@ -119,49 +118,49 @@
         </nav>
 
         <div id="page-wrapper">
+            <br/>
+           <h2>Exact Location of Restaurant</h2>
+                <hr>
             <div class="row">
+
                 <div class="col-lg-12">
-                    <h3>Restaurant Profile</h3>
+                    <center>
+                        <br/>
+                            <img src="../img/map.png" class="myimagehistory">   
+                    </center>
+                   
+                    <div class="row">
+                        <br/>
+                        <div class="col-lg-8">
+                            <label>Complete Address</label>
+                            <textarea class="form-control"></textarea>
+                            <label></label>
+                            <label>Latitude</label>
+                            <input class="form-control">
+                            <label>Longitude</label>
+                            <input class="form-control">
+                            <br/>
+                            <button class="btn btn-sm btn-success btn-outline">Save location</button>
+                        </div>
+                    </div>
+                    <br/>
+                    </div>
+                    
                 </div>
             </div>
-            <div class="row">
-                    <div class="col-lg-8">
-                        <div class="form-group">
-                            <input class="form-control" id="restname" placeholder="Restaurant Name">
-                        </div>
-                        <button type="button" class="btn btn-outline btn-info btn-sm" >Profile Photo</button>
-                       <!--  &nbsp;&nbsp;&nbsp;&nbsp; -->
-                        <button type="button" class="btn btn-outline btn-success btn-sm">Save</button>
-
-                        <br/> <br/> <br/> <br/>
-                        <h4>Blog/Web URL</h4>
-                        <div class="form-group">
-                            <input class="form-control">
-                        <h4>Contact Number</h4>
-                        <div class="form-group">
-                            <input class="form-control">
-                        </div>
-                        <button type="button" class="btn btn-outline btn-success btn-sm">Save</button>
-                    </div>
-                </div>
-                <hr>
-           
         </div>
-    </div>
-    </div>
+    
 
-    <!-- jQuery -->
+    
+   <!-- jQuery -->
     <script src="../responsivetools/sbadmin/vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="../responsivetools/sbadmin/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../responsivetools/sbadmin/vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <script src="../responsivetools/sbadmin/vendor/raphael/raphael.min.js"></script>
-    <script src="../responsivetools/sbadmin/vendor/morrisjs/morris.min.js"></script>
-    <script src="../responsivetools/sbadmin/data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../responsivetools/sbadmin/dist/js/sb-admin-2.js"></script>
+
 
 </body>
 
